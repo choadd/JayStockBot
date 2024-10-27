@@ -1,7 +1,7 @@
 #include "testWorker/MyWorker.h"
 #include "base/thread/ThreadManager.h"
 #include <vector>
-
+#include "securities/koreaInvest/KoreaInvestSecurities.h"
 int main() {
     ThreadManager manager;
     std::vector<MyWorker*> workers;
@@ -15,7 +15,7 @@ int main() {
 
     manager.startAll(); // 모든 스레드 시작
 
-    std::this_thread::sleep_for(std::chrono::seconds(5)); // 5초 대기
+    std::this_thread::sleep_for(std::chrono::seconds(1)); // 5초 대기
 
     manager.stopAll(); // 모든 스레드 정지
     manager.joinAll(); // 모든 스레드 종료
@@ -24,6 +24,18 @@ int main() {
     for (auto worker : workers) {
         delete worker;
     }
+
+    SecurityConfig security;
+    security.appKey = "";
+    security.appSecret = "";
+    security.urlBase = "";
+
+    // KoreaInvestSecurities 객체 생성
+    KoreaInvestSecurities ko(security);
+
+    // 액세스 토큰 요청
+    ko.getAccessToken();
+
 
     return 0;
 }
