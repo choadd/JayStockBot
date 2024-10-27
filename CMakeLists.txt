@@ -19,9 +19,21 @@ file(GLOB_RECURSE SOURCES
 # Executable 타겟 생성
 add_executable(stock_trading ${SOURCES})
 
-# 필요한 경우 다른 라이브러리 링크 설정
-# target_link_libraries(stock_trading <필요한 라이브러리>)
-
 # pthread 라이브러리 링크
 find_package(Threads REQUIRED)
 target_link_libraries(stock_trading PRIVATE Threads::Threads)
+
+# curl 라이브러리 링크
+find_package(CURL REQUIRED)
+if(CURL_FOUND)
+    target_include_directories(stock_trading PRIVATE ${CURL_INCLUDE_DIRS}) # 변경: include 디렉토리 추가
+    target_link_libraries(stock_trading PRIVATE ${CURL_LIBRARIES})
+endif()
+
+# jsoncpp 라이브러리 링크
+find_package(jsoncpp REQUIRED)
+target_link_libraries(stock_trading PRIVATE jsoncpp_lib)
+
+# yaml-cpp 라이브러리 링크
+find_package(yaml-cpp REQUIRED)
+target_link_libraries(stock_trading PRIVATE yaml-cpp)
