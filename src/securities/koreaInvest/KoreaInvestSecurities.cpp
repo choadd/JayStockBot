@@ -175,7 +175,6 @@ int KoreaInvestSecurities::getCurrentPrice(const std::string& code) {
 
     // 요청 헤더 설정
     struct curl_slist* headers = nullptr;
-    std::string token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6IjY2NmM5MjFkLWU4ZGItNDg0YS04NmEyLWU5MDMwYTZmYTY4YiIsInByZHRfY2QiOiIiLCJpc3MiOiJ1bm9ndyIsImV4cCI6MTczMDM3NjY0MSwiaWF0IjoxNzMwMjkwMjQxLCJqdGkiOiJQU0hweWZBeUlTcWhKaXI4cnpxUzdNdldtaElZMWNtUjhNU2wifQ.PCRquF-Hzv0412tWC-kj6C47dWa0fmhtob6eGY6xuYOHQBiALIMaMZOn-BBn_FPFdQ1sijM2l46t921k3HJEYA";
     headers = curl_slist_append(headers, "Content-Type: application/json");
     headers = curl_slist_append(headers, ("authorization: Bearer " + token).c_str());
     headers = curl_slist_append(headers, ("appKey: " + securityConfig.appKey).c_str());

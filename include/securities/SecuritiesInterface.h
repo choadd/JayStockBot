@@ -7,16 +7,14 @@ struct SecurityConfig {
     std::string appKey;
     std::string appSecret;
     std::string urlBase;
+    std::string token;
 };
 
 class SecuritiesInterface {
 public:
-    SecuritiesInterface(const SecurityConfig& config);
-    virtual ~SecuritiesInterface(){}; // 가상 소멸자 선언
-
-    virtual std::string getAccessToken();
-    virtual std::string getHashkey(const std::string& data);
-    virtual bool loadConfig(const std::string& configPath);
+    virtual std::string getAccessToken() = 0;
+    virtual std::string getHashkey(const std::string& data) = 0;
+    virtual bool loadConfig(const std::string& configPath) = 0;
 
 protected:
     SecurityConfig securityConfig;

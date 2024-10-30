@@ -2,16 +2,21 @@
 #include "base/thread/ThreadManager.h"
 #include <vector>
 #include "securities/koreaInvest/KoreaInvestSecurities.h"
+
 int main() {
     ThreadManager manager;
-    std::vector<MyWorker*> workers;
+    std::vector<void*> workers;
 
-    // 3개의 MyWorker 객체 생성
-    for (int i = 0; i < 3; ++i) {
-        MyWorker* worker = new MyWorker(i + 1); // 1부터 시작하는 ID
-        workers.push_back(worker);
-        manager.addThread(worker); // ThreadManager에 추가
-    }
+    // add security logic
+    SecurityConfig security;
+    security.urlBase = "https://openapi.koreainvestment.com:9443";
+
+    // KoreaInvestSecurities 객체 생성
+    KoreaInvestSecurities *ko = new KoreaInvestSecurities(security);
+    workers.push_back(ko);
+    manager.addThread(ko);
+    // end security logic
+    
 
     manager.startAll(); // 모든 스레드 시작
 
@@ -24,18 +29,6 @@ int main() {
     for (auto worker : workers) {
         delete worker;
     }
-
-    SecurityConfig security;
-    security.appKey = "";
-    security.appSecret = "";
-    security.urlBase = "";
-
-    // KoreaInvestSecurities 객체 생성
-    KoreaInvestSecurities ko(security);
-
-    // 액세스 토큰 요청
-    ko.getAccessToken();
-
 
     return 0;
 }
