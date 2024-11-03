@@ -14,6 +14,7 @@ include_directories(include)
 # src 디렉토리의 모든 소스 파일 지정
 file(GLOB_RECURSE SOURCES 
     "src/**/*.cpp"
+    "src/**/**/*.cpp"
 )
 
 # Executable 타겟 생성
